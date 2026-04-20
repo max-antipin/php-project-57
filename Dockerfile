@@ -2,7 +2,7 @@ FROM composer:2.9 AS composer_image
 
 FROM php:8.4-cli AS base
 RUN set -eu; \
-    apt-get update && apt-get install -y --no-install-recommends libzip-dev libpq-dev; \
+    apt-get update && apt-get install -y --no-install-recommends libzip-dev libpq-dev unzip; \
     docker-php-ext-install zip pcntl pdo pdo_pgsql; \
     rm -rf /var/lib/apt/lists/*
 ENV PORT=8000
