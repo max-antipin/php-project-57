@@ -32,7 +32,8 @@ FROM node:24-alpine AS frontend_prod
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
-COPY --parents vite.config.js resources/ ./
+COPY vite.config.js ./
+COPY resources/ ./resources/
 RUN --mount=type=bind,from=pre_prod,source=/app/storage/framework/,target=/app/storage/framework/ \
     --mount=type=bind,from=pre_prod,source=/app/vendor/laravel/framework/src/,target=/app/vendor/laravel/framework/src/ \
     npm run build
