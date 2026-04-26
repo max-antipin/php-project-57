@@ -30,8 +30,13 @@ stop-dev:
 stop-prod:
 	docker stop hexlet-php-project-57-prod
 
-lint:
+phpstan:
+	php vendor/bin/phpstan analyse --memory-limit=1G --debug -vvv
+
+phpcs:
 	php vendor/bin/phpcs
+
+lint: phpcs phpstan
 
 lint-fix:
 	php vendor/bin/phpcbf
