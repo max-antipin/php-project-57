@@ -29,3 +29,9 @@ stop-dev:
 
 stop-prod:
 	docker stop hexlet-php-project-57-prod
+
+lint:
+	php vendor/bin/phpcs
+
+lint-fix:
+	php vendor/bin/phpcbf
