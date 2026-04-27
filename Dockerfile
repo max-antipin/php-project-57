@@ -27,6 +27,8 @@ RUN --mount=type=bind,from=composer_image,source=/usr/bin/composer,target=/usr/l
     set -eu; \
     composer dump-autoload --no-dev --classmap-authoritative --strict-psr --strict-ambiguous; \
     php artisan view:cache
+ONBUILD COPY --from=frontend_prod --link /app/public/build/ /app/public/build/
+CMD ["bash", "-c", "php artisan migrate:refresh --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
 
 FROM node:24-alpine AS frontend_prod
 WORKDIR /app
@@ -38,6 +40,7 @@ RUN --mount=type=bind,from=pre_prod,source=/app/storage/framework/,target=/app/s
     --mount=type=bind,from=pre_prod,source=/app/vendor/laravel/framework/src/,target=/app/vendor/laravel/framework/src/ \
     npm run build
 
+FROM pre_prod AS staging
+ENV APP_ENV=staging
+
 FROM pre_prod AS prod
-COPY --from=frontend_prod --link /app/public/build/ /app/public/build/
-CMD ["bash", "-c", "php artisan migrate:refresh --force && php artisan serve --host=0.0.0.0 --port=$PORT"]

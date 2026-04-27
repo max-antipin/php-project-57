@@ -3,6 +3,7 @@
 !bootstrap/
 !database/factories/
 !database/migrations/
+!lang/
 !public/*.*
 !resources/
 !routes/
