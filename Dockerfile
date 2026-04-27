@@ -28,7 +28,7 @@ RUN --mount=type=bind,from=composer_image,source=/usr/bin/composer,target=/usr/l
     composer dump-autoload --no-dev --classmap-authoritative --strict-psr --strict-ambiguous; \
     php artisan view:cache
 ONBUILD COPY --from=frontend_prod --link /app/public/build/ /app/public/build/
-CMD ["bash", "-c", "php artisan migrate:refresh --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["bash", "-c", "php artisan migrate:refresh --force && php artisan user:init $ADMIN_EMAIL && php artisan serve --host=0.0.0.0 --port=$PORT"]
 
 FROM node:24-alpine AS frontend_prod
 WORKDIR /app

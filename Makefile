@@ -29,6 +29,7 @@ bash-prod:
 
 run-staging:
 	docker run --rm -itd -p $(PORT):8000 --env-file ./.env.production --name hexlet-php-project-57-staging hexlet-php-project-57:staging
+	make bash-staging
 
 bash-staging:
 	docker exec -it hexlet-php-project-57-staging bash
